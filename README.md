@@ -1,3 +1,4 @@
+Dependencies: redux, react-redux, redux-thunk, react-router-dom
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
