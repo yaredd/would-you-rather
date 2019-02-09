@@ -1,37 +1,39 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
 import { getAllUsers } from '../actions/users';
-import { Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Login from './Login'
-import { unsetAuthedUser } from '../actions/authedUser';
+import Nav from './Nav'
+import AddPoll from './AddPoll'
+import Home from './Home'
+import Leaderboard from './Leaderboard'
 
 class App extends Component {
   componentDidMount () {
     this.props.dispatch(getAllUsers())
   }
 
-  handleLogout = (e) => {
-    e.preventDefault()
-    this.props.dispatch(unsetAuthedUser())
-  }
 
   render() {
-    if (this.props.authedUser === null) {
+    if (this.props.authedUserId === null) {
       return <Login />
     }
-    const {users, authedUser} = this.props
     return (
-      <p>Hello {users[authedUser].name}
-      <button onClick={this.handleLogout}>logout</button> 
-      </p>
+      <Router>
+        <Fragment>
+          <Nav />
+          <Route exact path='/' component={Home} />
+          <Route path='/leaderboard' component={Leaderboard} />
+          <Route path='/add' component={AddPoll} />
+        </Fragment>
+      </Router>
     );
   }
 }
 
-const mapStateToProps = ({users, authedUser}) => {
+const mapStateToProps = ({users, authedUserId}) => {
   return {
-    users,
-    authedUser
+    authedUserId
   }
 }
 
