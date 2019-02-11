@@ -18,7 +18,7 @@ class Question extends Component {
         const { author, timestamp, id } = this.props.question
         const { toQuestionDetail } = this.state
         if(toQuestionDetail){
-            return <Redirect to={`/question/${id}`} />
+            return <Redirect to={`/questions/${id}`} />
         }
         return (
             <div>

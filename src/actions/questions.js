@@ -1,9 +1,10 @@
-import { _getQuestions, generateUID } from '../utils/_DATA'
+import { _getQuestions, _saveQuestionAnswer } from '../utils/_DATA'
 import { showLoading, hideLoading } from 'react-redux-loading'
 export const GET_UNANSWERED_QUESTIONS = 'GET_UNANSWERED_QUESTIONS'
 export const GET_ANSWERED_QUESTIONS = 'GET_ANSWERED_QUESTIONS'
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS'
 export const SET_CURRENT_QUESTION = 'SET_CURRENT_QUESTION'
+export const SAVE_QUESTION_ANSWER = 'SAVE_QUESTION_ANSWER'
 
 
 function getUnAnswered(userId, questions) {
@@ -30,24 +31,6 @@ function getQuestions(questions) {
         }
     )
 }
-  
-function _getAllVotes() {
-    return _getQuestions().then((questions) => {
-        const allIds = Object.keys(questions)
-        const allVotes = {}
-        allVotes.allIds = []
-        allVotes.byId = {}
-        allIds.forEach( (q) => {
-          let id = generateUID()
-          allVotes.byId[id] = {}
-          allVotes.byId[id].id = id
-          allVotes.byId[id].voters = [ ...new Set(questions[q].optionOne.votes.concat(questions[q].optionTwo.votes)) ]
-          allVotes.byId[id].questionId = q
-          allVotes.allIds.push(id)
-        })
-        return allVotes
-    })
-}
 
 function getAnsweredQuestionsByUser(user) {
     return _getQuestions().then((questions) => {
@@ -57,10 +40,7 @@ function getAnsweredQuestionsByUser(user) {
         AnsweredQuestions.allIds = AnsweredQuestionIds
         AnsweredQuestions.byId = {}
         AnsweredQuestionIds.forEach((qId) => {
-            const totalOptionOneVotes = questions[qId].optionOne.votes.length
-            const totalOptionTwoVotes = questions[qId].optionTwo.votes.length
-            const totalVotes = totalOptionOneVotes + totalOptionTwoVotes
-            AnsweredQuestions.byId[qId] = { ...questions[qId], totalVotes, totalOptionOneVotes, totalOptionTwoVotes}
+            AnsweredQuestions.byId[qId] = { ...questions[qId]}
         })
         return AnsweredQuestions
     })
@@ -78,6 +58,29 @@ function getUnAnsweredQuestionsByUser(user) {
         })
         return unAnsweredQuestions
     })
+}
+
+function saveAnswer({authedUser, qid, answer}) {
+    return {
+        type: SAVE_QUESTION_ANSWER,
+        answer,
+        qid,
+        authedUser
+    }
+}
+
+export function saveQuestionAnswer({authedUser, qid, answer}) {
+    return (dispatch) => {
+        dispatch(showLoading())
+        return (
+            _saveQuestionAnswer({authedUser, qid, answer})
+            .then((result) => {
+                console.log('RESUlT from SAVE: ', result)
+                dispatch(saveAnswer({authedUser, qid, answer}))
+                dispatch(hideLoading())
+            })
+        )
+    }
 }
 
 export function setCurrentQuestion(authedUserId, question) {

@@ -8,7 +8,6 @@ const answeredQuestions = (state={}, action) => {
                 ...state,
                 ...action.questions
             } 
-    
         default:
             return { ...state }
     }

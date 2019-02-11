@@ -1,4 +1,4 @@
-import { SET_CURRENT_QUESTION } from '../actions/questions'
+import { SET_CURRENT_QUESTION, SAVE_QUESTION_ANSWER } from '../actions/questions'
 
 
 const currentQuestion = (state=null, action) => {
@@ -8,6 +8,12 @@ const currentQuestion = (state=null, action) => {
             return {
                 ...action.question,
                 answered,
+            }
+        case SAVE_QUESTION_ANSWER:
+            return {
+                ...state,
+                answered: true,
+                [action.answer]: { ...state[action.answer], votes: state[action.answer].votes.concat([action.authedUser])}
             }
         default:
             return { ...state }
