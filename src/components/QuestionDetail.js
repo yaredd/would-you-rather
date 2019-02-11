@@ -77,7 +77,8 @@ class QuestionDetail extends Component {
                                 checked={this.state.choice === "optionTwo"}
                                 value="optionTwo" onChange={this.handleChoice} />
                         </label>
-                        <input type='submit' value='Submit'/>
+                        <input type='submit' value='Submit' disabled={this.state.choice !== 'optionOne' &&
+                           this.state.choice !== 'optionTwo' }/>
                     </form>
                 </div>
             )
