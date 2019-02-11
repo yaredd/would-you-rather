@@ -1,16 +1,39 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setCurrentQuestion } from '../actions/questions'
 
 class Question extends Component {
+    state = {
+        toQuestionDetail: false
+    }
+
+    handleQuestionView = (e) => {
+        e.preventDefault()
+        this.props.dispatch(setCurrentQuestion(this.props.authedUserId, this.props.question))
+        this.setState({toQuestionDetail: true})
+    }
 
     render () {
-        const { author, timestamp } = this.props.question
+        const { author, timestamp, id } = this.props.question
+        const { toQuestionDetail } = this.state
+        if(toQuestionDetail){
+            return <Redirect to={`/question/${id}`} />
+        }
         return (
             <div>
                 <p>Asked By: {author} {timestamp}</p>
-                <button>View</button>
+                <button onClick={this.handleQuestionView}>View</button>
             </div>
         )
     }
 }
 
-export default Question
+const mapStateToProps = ({ authedUserId }, props) => {
+    return {
+        authedUserId, 
+        ...props  //a user could have entered /queston/:id into the address bar -- must have a way to set props.question in this case as it would be null
+    }
+}
+
+export default connect(mapStateToProps)(Question)

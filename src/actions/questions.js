@@ -3,6 +3,7 @@ import { showLoading, hideLoading } from 'react-redux-loading'
 export const GET_UNANSWERED_QUESTIONS = 'GET_UNANSWERED_QUESTIONS'
 export const GET_ANSWERED_QUESTIONS = 'GET_ANSWERED_QUESTIONS'
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS'
+export const SET_CURRENT_QUESTION = 'SET_CURRENT_QUESTION'
 
 
 function getUnAnswered(userId, questions) {
@@ -77,6 +78,14 @@ function getUnAnsweredQuestionsByUser(user) {
         })
         return unAnsweredQuestions
     })
+}
+
+export function setCurrentQuestion(authedUserId, question) {
+    return {
+        type: SET_CURRENT_QUESTION,
+        question,
+        authedUserId
+    }
 }
 
 export function getAnsweredQuestions(userId) {
