@@ -41,7 +41,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({users, authedUserId}) => {
+const mapStateToProps = ({ authedUserId}) => {
   return {
     authedUserId
   }
