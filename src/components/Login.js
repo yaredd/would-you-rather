@@ -30,7 +30,7 @@ class Login extends Component {
               <option key={userId} value={userId}>{users[userId].name}</option>
             ))}
           </select>  
-          <input type='submit' value='LOGIN' />
+          <input type='submit' value='LOGIN' disabled={this.state.userId === ''} />
         </form>
       </div>
     )

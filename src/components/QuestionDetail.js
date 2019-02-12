@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { saveQuestionAnswer } from '../actions/questions';
+import formatDate from '../utils/formatDate'
 
 class QuestionDetail extends Component {
     state = {
@@ -60,7 +61,7 @@ class QuestionDetail extends Component {
         }else {
             return (
                 <div>
-                    {author} asked on {timestamp}
+                    {author} asked on {formatDate(timestamp)}
                     <form onSubmit={this.handleFormSubmit} >
                         <p><img src={users[author].avatarURL} width="50px" alt={`${author} avatar`}/>
                         <span>Would you rather ....</span></p>

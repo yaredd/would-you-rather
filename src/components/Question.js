@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setCurrentQuestion } from '../actions/questions'
+import formatDate from '../utils/formatDate'
 
 class Question extends Component {
     state = {
@@ -22,7 +23,7 @@ class Question extends Component {
         }
         return (
             <div>
-                <p>Asked By: {author} {timestamp}</p>
+                <p>Asked By: {author} on {formatDate(timestamp)}</p>
                 <button onClick={this.handleQuestionView}>View</button>
             </div>
         )

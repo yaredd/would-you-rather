@@ -7,7 +7,7 @@ class ScoreCard extends Component {
         return (
             <div>
                 <p><img src={avatarURL} width="50px" alt={`${name} avatar`}/>
-                        <span>Would you rather .... Score Card for {name}</span></p>
+                        <span> {name}</span></p>
                 <p>
                     Total Questions asked: {totalQuestions}
                 </p>

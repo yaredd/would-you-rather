@@ -1,5 +1,5 @@
 import { GET_ALL_USERS } from "../actions/users";
-import { SAVE_QUESTION_ANSWER } from "../actions/questions";
+import { SAVE_QUESTION_ANSWER, NEW_QUESTION } from "../actions/questions";
 
 const users = (state={}, action) => {
     switch (action.type) {
@@ -11,6 +11,11 @@ const users = (state={}, action) => {
                 [action.authedUser]: {...state[action.authedUser], 
                                         answers: {...state[action.authedUser].answers, 
                                           [action.qid]: action.answer }}
+            }
+        case NEW_QUESTION:
+            return {
+                ...state,
+                [action.question.author]: { ...state[action.question.author], questions: [...state[action.question.author].questions.concat([action.question.id])]}
             }
         default:
             return { ...state }

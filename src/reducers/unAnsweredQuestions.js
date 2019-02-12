@@ -7,7 +7,7 @@ const unAnsweredQuestions = (state={}, action) => {
             return {
                 ...state,
                 ...action.questions
-            } 
+            }
         default:
             return { ...state }
     }

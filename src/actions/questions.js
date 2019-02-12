@@ -1,10 +1,11 @@
-import { _getQuestions, _saveQuestionAnswer } from '../utils/_DATA'
+import { _getQuestions, _saveQuestionAnswer, _saveQuestion } from '../utils/_DATA'
 import { showLoading, hideLoading } from 'react-redux-loading'
 export const GET_UNANSWERED_QUESTIONS = 'GET_UNANSWERED_QUESTIONS'
 export const GET_ANSWERED_QUESTIONS = 'GET_ANSWERED_QUESTIONS'
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS'
 export const SET_CURRENT_QUESTION = 'SET_CURRENT_QUESTION'
 export const SAVE_QUESTION_ANSWER = 'SAVE_QUESTION_ANSWER'
+export const NEW_QUESTION = 'NEW_QUESTION'
 
 
 function getUnAnswered(userId, questions) {
@@ -69,13 +70,32 @@ function saveAnswer({authedUser, qid, answer}) {
     }
 }
 
+function newQuestion(question) {
+    return {
+        type: NEW_QUESTION,
+        question
+    }
+}
+
+export function saveNewQuestion(question) {
+    return (dispatch) => {
+        dispatch(showLoading())
+        return (
+            _saveQuestion(question)
+            .then((question) => {
+                dispatch(newQuestion(question))
+                dispatch(hideLoading())
+            })
+        ) 
+    }
+}
+
 export function saveQuestionAnswer({authedUser, qid, answer}) {
     return (dispatch) => {
         dispatch(showLoading())
         return (
             _saveQuestionAnswer({authedUser, qid, answer})
             .then((result) => {
-                console.log('RESUlT from SAVE: ', result)
                 dispatch(saveAnswer({authedUser, qid, answer}))
                 dispatch(hideLoading())
             })
