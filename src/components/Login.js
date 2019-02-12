@@ -20,7 +20,7 @@ class Login extends Component {
     const { users } = this.props
     const userIds = Object.keys(users).sort((a,b) => (b < a))
     return (
-      <div>
+      <div className='center'>
 
         <p>Login</p>
         <form onSubmit={this.handleLogin} >

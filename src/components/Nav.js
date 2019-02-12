@@ -26,11 +26,9 @@ class Nav extends Component {
                     <li>
                         <NavLink to='/add' activeClassName='active'>Add Poll</NavLink>
                     </li>
-                    <li>
-                        Hello {users[authedUserId].name}
-                    </li>
-                    <li>
-                        <button className='link-button' onClick={this.handleLogout}>logout</button> 
+                    <li className='logout'>
+                        <img className='nav-avatar' src={users[authedUserId].avatarURL} width="20px" alt={`${authedUserId} avatar`}/><span>Hello {users[authedUserId].name}.  
+                         &nbsp; <button className='link-button' onClick={this.handleLogout}>logout</button></span>
                     </li>
                 </ul>
             </nav>

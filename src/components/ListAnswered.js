@@ -12,15 +12,16 @@ class ListAnswered extends Component {
     render () {
         const { loading, answeredQuestions } = this.props
         return (
-            <div>
-                <p>Answered List</p>
-                { loading ? null :
-                            <ul>
-                                {answeredQuestions.allIds.map((id) => {
-                                    return <li key={id}><Question question={answeredQuestions.byId[id]}/></li>
-                                })}
-                            </ul>
-                }
+            <div className='center'>
+                <div className='polls'>
+                    { loading ? null :
+                                <ul>
+                                    {answeredQuestions.allIds.map((id) => {
+                                        return <li key={id}><Question question={answeredQuestions.byId[id]}/></li>
+                                    })}
+                                </ul>
+                    }
+                </div>
             </div>
         )
     }

@@ -14,18 +14,19 @@ class Leaderboard extends Component {
     render () {
         const { userIds, users } = this.props
         return (
-            <div>
-                <p>Leaderboard</p>
-                <ol>
-                    {userIds.map((userId) => {
-                        return (
-                            <li key={userId}><ScoreCard totalQuestions={this.getTotalQuestions(users[userId])} 
-                                    totalAnswers={this.getTotalAnswers(users[userId])} 
-                                    avatarURL={users[userId].avatarURL}
-                                    name={users[userId].name} /></li>
-                        )
-                    })}
-                </ol>
+            <div className='center'>
+                <div className='polls'>
+                    <ol>
+                        {userIds.map((userId) => {
+                            return (
+                                <li key={userId}><ScoreCard totalQuestions={this.getTotalQuestions(users[userId])} 
+                                        totalAnswers={this.getTotalAnswers(users[userId])} 
+                                        avatarURL={users[userId].avatarURL}
+                                        name={users[userId].name} /></li>
+                            )
+                        })}
+                    </ol>
+                </div>
             </div>
         )
     }

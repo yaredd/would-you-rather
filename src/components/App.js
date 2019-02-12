@@ -25,14 +25,16 @@ class App extends Component {
       <Router>
         <Fragment>
           <LoadingBar />
-          <Nav />
-          <Switch>
-              <Route exact path='/' component={Home} />
-              <Route path='/leaderboard' component={Leaderboard} />
-              <Route path='/add' component={AddPoll} />
-              <Route path='/questions/:id' component={QuestionDetail} />
-              <Route component={NotFound} />
-          </Switch>
+          <div className='container'>
+            <Nav />
+            <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/leaderboard' component={Leaderboard} />
+                <Route path='/add' component={AddPoll} />
+                <Route path='/questions/:id' component={QuestionDetail} />
+                <Route component={NotFound} />
+            </Switch>
+          </div>
         </Fragment>
       </Router>
     );

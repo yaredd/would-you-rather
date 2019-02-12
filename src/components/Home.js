@@ -15,10 +15,13 @@ class Home extends Component {
     render () {
         return (
             <div>
-                <ul onClick={this.toggleView}>
-                    <li><button className='link-button' disabled={!this.state.showAnswered}>Un-Answered Questions</button></li>     
-                    <li><button className='link-button' disabled={this.state.showAnswered}>Answered Questions</button></li>     
-                </ul> 
+                <nav className='navbar'>
+                    <ul onClick={this.toggleView}>
+                        <li><button className={`link-button ${!this.state.showAnswered ? 'active': ''}`}>Un-Answered Questions</button></li>     
+                        <li><button className={`link-button ${this.state.showAnswered ? 'active': ''}`}>Answered Questions</button></li>     
+                    </ul> 
+                </nav>
+            
                 { this.state.showAnswered ? <ListAnswered /> : <ListUnAnswered />}
             </div>
 

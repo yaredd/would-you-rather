@@ -32,6 +32,23 @@ nav.navbar li a {
   text-decoration: none;
 }
 
+nav.navbar li.user {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  float: right;
+  color: white;
+}
+
+nav.navbar li.logout {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  display: block;
+  color: white;
+  float: right;
+}
+
 nav.navbar .link-button {
   background-color: transparent;
   border: none;
@@ -45,4 +62,94 @@ nav.navbar .link-button {
 nav .link-button:hover,
 .link-button:focus {
 text-decoration: none;
+}
+
+.avatar {
+  height: 50px;
+  border-radius: 25px;
+  margin: 10px;
+}
+
+.nav-avatar {
+  height: 20px;
+  border-radius: 15px;
+  margin: 5px;
+}
+
+.btn {
+  text-transform: uppercase;
+  margin: 35px auto;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,.29);
+  cursor: pointer;
+  background: #fff;
+  font-size: 16px;
+  width: 250px;
+  position: relative;
+}
+
+.btn:hover {
+  border-color: rgba(0,0,0,.5);
+  text-decoration: none;
+}
+
+.btn:focus {
+  outline: 0;
+  font-weight: 700;
+  border-width: 2px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.center {
+  text-align: center; } 
+ 
+.active {
+  font-weight: bold;
+}
+
+.polls {
+  width: 100%;
+  max-width: 590px;
+  padding: 10px;
+  display: flex;
+  margin: 5px auto;
+  border: 1px solid #dad7d7;
+  border-radius: 5px;
+  flex-direction: column;
+}
+
+.poll-info {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dad7d7;
+  border-radius: 0px
+}
+
+ul {
+  padding-left: 0;
+}
+
+ol li {
+  padding: 10px;
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.new-poll {
+  width: 100%;
+  max-width: 590px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }

@@ -5,7 +5,7 @@ class ScoreCard extends Component {
     render () {
         const { avatarURL, name, totalQuestions, totalAnswers } = this.props
         return (
-            <div>
+            <div className="poll-info">
                 <p><img src={avatarURL} width="50px" alt={`${name} avatar`}/>
                         <span> {name}</span></p>
                 <p>
