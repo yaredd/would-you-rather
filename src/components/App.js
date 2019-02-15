@@ -9,7 +9,7 @@ import Home from './Home'
 import Leaderboard from './Leaderboard'
 import QuestionDetail from './QuestionDetail'
 import NotFound from './NotFound'
-import { LoadingBar } from 'react-redux-loading';
+import { LoadingBar } from 'react-redux-loading-bar';
 
 class App extends Component {
   componentDidMount () {
@@ -24,7 +24,9 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <LoadingBar />
+          <header>
+              <LoadingBar style={{ backgroundColor: 'red', height: '15px' }} />
+          </header>
           <div className='container'>
             <Nav />
             <Switch>

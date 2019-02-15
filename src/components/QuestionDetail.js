@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom'
-import { saveQuestionAnswer } from '../actions/questions';
+import { saveQuestionAnswer, setCurrentQuestion, getAllQuestions } from '../actions/questions';
 import formatDate from '../utils/formatDate'
 
 class QuestionDetail extends Component {
     state = {
-        choice: ''
+        choice: '',
+        notFound: false
+    }
+
+    componentDidMount = () => {
+        const { setCurrentQuestionFromURL, loading, id, authedUserId} = this.props
+        if(loading){
+            setCurrentQuestionFromURL(authedUserId, id)
+            .catch((e) => this.setState({notFound: true}))
+        }
     }
 
     handleChoice = (e) => {
@@ -15,11 +24,11 @@ class QuestionDetail extends Component {
 
     handleFormSubmit = (e) => {
         e.preventDefault()
-        this.props.dispatch(saveQuestionAnswer({
+        this.props.saveQuestion({
             authedUser: this.props.authedUserId,
             qid: this.props.currentQuestion.id,
             answer: this.state.choice
-        }))
+        })
         this.props.history.push(`/questions/${this.props.currentQuestion.id}`)
     }
 
@@ -35,10 +44,13 @@ class QuestionDetail extends Component {
         const totalVotes = totalOptionOneVotes + totalOptionTwoVotes
         return {totalVotes, totalOptionOneVotes, totalOptionTwoVotes}
     }
-    
+
     render () {
-        if(this.props.currentQuestion.optionOne === undefined){
-            return <Redirect to='/'/>
+        if(this.state.notFound) {
+            return <Redirect to={'/not_found'} />
+        }
+        if(this.props.loading) {
+            return null
         }
         const { currentQuestion, users, authedUserId } = this.props
         const { author, timestamp, optionOne, 
@@ -46,7 +58,8 @@ class QuestionDetail extends Component {
         const {totalVotes, totalOptionOneVotes, totalOptionTwoVotes } = this.getTotals()
         const percentOptionOne = (totalOptionOneVotes/totalVotes*100).toFixed(1) + '%'
         const percentOptionTwo = (totalOptionTwoVotes/totalVotes*100).toFixed(1) + '%'
-        if(answered) {
+
+        if(answered === true) {
             return (
                 <div className='center'>
                     <div className='polls'>
@@ -103,12 +116,25 @@ class QuestionDetail extends Component {
     }
 }
 
-const mapStateToStore = ({ users, authedUserId, currentQuestion }) => {
+const mapStateToStore = ({ questions, users, authedUserId, currentQuestion }, props) => {
+    const { id } = props.match.params
     return {
+        loading: currentQuestion.optionOne === undefined ? true : false,
         users,
         authedUserId,
-        currentQuestion
+        questions,
+        currentQuestion,
+        id
     }
 }
 
-export default withRouter(connect(mapStateToStore)(QuestionDetail))
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        saveQuestion: (question) => dispatch(saveQuestionAnswer(question)),
+        setCurrentQuestionFromURL: (uid, qid) => dispatch(getAllQuestions()).then((questions) => { 
+            dispatch(setCurrentQuestion(uid,questions[qid]))
+        })
+    })
+}
+
+export default withRouter(connect(mapStateToStore, mapDispatchToProps)(QuestionDetail))

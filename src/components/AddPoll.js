@@ -19,7 +19,7 @@ class AddPoll extends Component {
         question.author = this.props.authedUserId
         question.optionOneText = this.state.optionOneText
         question.optionTwoText = this.state.optionTwoText
-        this.props.dispatch(saveNewQuestion(question))
+        this.props.saveNew(question)
         this.props.history.push('/')
 
     }
@@ -57,4 +57,10 @@ const mapStateToProps = ({ authedUserId }) => {
     }
 }
 
-export default connect(mapStateToProps)(AddPoll)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveNew: (question) => dispatch(saveNewQuestion(question))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPoll)

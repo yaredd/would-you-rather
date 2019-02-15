@@ -11,7 +11,7 @@ class Question extends Component {
 
     handleQuestionView = (e) => {
         e.preventDefault()
-        this.props.dispatch(setCurrentQuestion(this.props.authedUserId, this.props.question))
+        this.props.getCurrentQuestion(this.props.authedUserId, this.props.question)
         this.setState({toQuestionDetail: true})
     }
 
@@ -37,8 +37,14 @@ const mapStateToProps = ({ authedUserId, users}, props) => {
     return {
         authedUserId, 
         users,
-        ...props  //a user could have entered /queston/:id into the address bar -- must have a way to set props.question in this case as it would be null
+        ...props
     }
 }
 
-export default connect(mapStateToProps)(Question)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getCurrentQuestion: (uid, question) => dispatch(setCurrentQuestion(uid, question))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Question)

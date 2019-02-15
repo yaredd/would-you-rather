@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../actions/authedUser';
 
@@ -17,30 +17,33 @@ class Login extends Component {
   }
 
   render () {
-    const { users } = this.props
-    const userIds = Object.keys(users).sort((a,b) => (b < a))
+    const { loading, users, userIds } = this.props
     return (
-      <div className='center'>
-
-        <p>Login</p>
-        <form onSubmit={this.handleLogin} >
-          <select value={this.state.userId} onChange={this.handleUserSelect} >
-            <option value=''></option>
-            {userIds.map((userId) => (
-              <option key={userId} value={userId}>{users[userId].name}</option>
-            ))}
-          </select>  
-          <input type='submit' value='LOGIN' disabled={this.state.userId === ''} />
-        </form>
-      </div>
+      <Fragment>
+        { loading === true ? null : 
+            <div className='center'>
+              <p>Login</p>
+              <form onSubmit={this.handleLogin} >
+                <select value={this.state.userId} onChange={this.handleUserSelect} >
+                  <option value=''></option>
+                  {userIds.map((userId) => (
+                    <option key={userId} value={userId}>{users[userId].name}</option>
+                  ))}
+                </select>  
+                <input type='submit' value='LOGIN' disabled={this.state.userId === ''} />
+              </form>
+            </div>
+        }
+      </Fragment>
     )
   }
-
 }
 
 function mapStateToProps ({ users }) {
   return {
-    users
+    userIds: Object.keys(users).sort((a,b) => b - a),
+    users,
+    loading: users === null ? true : false
   }
 }
 

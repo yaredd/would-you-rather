@@ -1,12 +1,11 @@
 import { _getQuestions, _saveQuestionAnswer, _saveQuestion } from '../utils/_DATA'
-import { showLoading, hideLoading } from 'react-redux-loading'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 export const GET_UNANSWERED_QUESTIONS = 'GET_UNANSWERED_QUESTIONS'
 export const GET_ANSWERED_QUESTIONS = 'GET_ANSWERED_QUESTIONS'
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS'
 export const SET_CURRENT_QUESTION = 'SET_CURRENT_QUESTION'
 export const SAVE_QUESTION_ANSWER = 'SAVE_QUESTION_ANSWER'
 export const NEW_QUESTION = 'NEW_QUESTION'
-
 
 function getUnAnswered(userId, questions) {
     return {
@@ -24,7 +23,7 @@ function getAnswered(userId, questions) {
     }
 }
 
-function getQuestions(questions) {
+function getQuestionsAction(questions) {
     return (
         {
             type: GET_ALL_QUESTIONS,
@@ -111,6 +110,29 @@ export function setCurrentQuestion(authedUserId, question) {
     }
 }
 
+export function getAllQuestions() {
+    return (dispatch) => {
+        dispatch(showLoading())
+        return _getQuestions()
+                .then((questions) => {
+                    dispatch(getQuestionsAction(questions))
+                    dispatch(hideLoading())
+                    return questions
+                })
+    }
+}
+
+export function setCurrentQuestionById(authedUserId, qid) {
+    return (dispatch) => {
+        dispatch(showLoading())
+        return _getQuestions()
+            .then((questions) => {
+                dispatch(setCurrentQuestion(authedUserId, questions[qid]))
+                dispatch(hideLoading())
+            })
+    }
+}
+
 export function getAnsweredQuestions(userId) {
     return (dispatch) => {
         dispatch(showLoading())
@@ -129,10 +151,4 @@ export function getUnAnsweredQuestions(userId) {
             dispatch(hideLoading())
         })
     }
-}
-
-export function getAllQuestions() {
-    return (dispatch) => (
-        _getQuestions().then((qs) => dispatch(getQuestions(qs)))
-    )
 }

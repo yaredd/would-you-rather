@@ -5,7 +5,7 @@ The is the "Would you rather ..." game that can be played by multiple users. Thi
 ## Dependencies
 In the project directory run 
 
-###`yarn add redux react-redux redux-thunk react-router-dom react-redux-loading` to load the dependencies
+### `npm install` or `yarn install` to load the dependencies
 
 In the project directory, you can run:
 
